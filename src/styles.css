@@ -30,3 +30,11 @@
 .border-primary {
   border: 2px solid #2e9dbe !important;
 }
+
+.text-primary {
+  color: #2e9dbe !important;
+}
+
+th {
+  border-top: none !important;
+}
