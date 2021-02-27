@@ -3,6 +3,36 @@ import "../styles.css";
 import { API } from "../backend";
 import Base from "./Base";
 
+const circularProgregessBar = (percentage) => (
+  <div className="row">
+    <div className="col-12 col-md-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3 col-md-2">
+            <div class="progress" data-percentage={parseInt(percentage)}>
+              <span class="progress-left">
+                <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value ml-4">
+                <div>
+                  {percentage}%
+                  <br />
+                  <span>completed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="col-12 col-md-4"></div>
+    <div className="col-12 col-md-4"></div>
+  </div>
+);
+
 export default function Home() {
   console.log("API IS", API);
   const tableDatas = [
@@ -43,8 +73,22 @@ export default function Home() {
       },
     },
   ];
+  const annualCarddata = [
+    {
+      percentage: 11.8,
+      name: "Annual Prospects",
+    },
+    {
+      percentage: 50,
+      name: "Annual Potential",
+    },
+    {
+      percentage: 60,
+      name: "Annual Patients",
+    },
+  ];
   return (
-    <Base title="Home Page">
+    <Base>
       <div className="mycontainer">
         <div className="row">
           <div className="col-md-3 col-12">
@@ -93,22 +137,38 @@ export default function Home() {
                   <td>{tableData.zipcode}</td>
                   <td>{tableData.market}</td>
                   <td>
-                    {tableData.marketVariable.desc}
-                    <div className="progress">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="70"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        style={{ width: `${tableData.marketVariable.data}%` }}
-                      ></div>
-                    </div>
+                    {tableData.marketVariable.desc} <br />
+                    <input
+                      type="range"
+                      className="form-range w-100"
+                      min="0"
+                      max="100"
+                      value={tableData.marketVariable.data}
+                      id="customRange2"
+                    />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="row mt-2">
+          {annualCarddata.map((data) => (
+            <div className="col-md-4 col-12">
+              <div className="p-2 row border m-1">
+                <div className="col-4">
+                  {circularProgregessBar(data.percentage)}
+                </div>
+                <div className="col-8 align-middle">
+                  <h3 className="mt-20p ml-15p">
+                    <b>{data.name}</b>
+                  </h3>
+                  <br />
+                  <h5 className="ml-15p">{data.percentage}%</h5>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </Base>
