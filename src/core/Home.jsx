@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles.css";
 import { API } from "../backend";
+import Map from "./Map";
 import Base from "./Base";
 
 const circularProgregessBar = (percentage) => (
@@ -9,7 +10,7 @@ const circularProgregessBar = (percentage) => (
       <div class="container">
         <div class="row">
           <div class="col-sm-3 col-md-2">
-            <div class="progress" data-percentage={parseInt(percentage)}>
+            <div class="progress" data-percentage={100 - parseInt(percentage)}>
               <span class="progress-left">
                 <span class="progress-bar"></span>
               </span>
@@ -169,6 +170,14 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="row bg-primary mt-3 rounded">
+          <div className="col-12 col-md-6 p-2 py-4">
+            <Map />
+          </div>
+          <div className="col-12 col-md-6 p-2 py-4">
+            <Map />
+          </div>
         </div>
       </div>
     </Base>
