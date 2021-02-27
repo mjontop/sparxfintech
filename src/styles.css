@@ -3,3 +3,30 @@
 .nav :hover {
   border-radius: 0px;
 }
+
+.right-shadow {
+  box-shadow: 10px 1px 12px 4px rgb(82 63 105 / 13%);
+  height: 100vh;
+}
+
+.hide-2x {
+  margin-left: -4px;
+  border-top-right-radius: 80px !important;
+  border-bottom-right-radius: 80px !important;
+}
+
+.mycontainer {
+  margin-left: 1%;
+  margin-right: 2%;
+}
+
+.rounded10 {
+  border-radius: 20px;
+}
+.btn-primary {
+  background: #2e9dbe !important;
+}
+
+.border-primary {
+  border: 2px solid #2e9dbe !important;
+}
