@@ -23,7 +23,12 @@ const Base = ({ children }) => (
             Logout
           </button>
         </div>
-        <div className=" col-12  col-md-10 pt-5">{children}</div>
+        <div
+          className=" col-12  col-md-10 pt-5"
+          style={{ backgroundColor: "#ffffe5", zIndex: -1 }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   </>
