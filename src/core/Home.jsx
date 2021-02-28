@@ -2,6 +2,7 @@ import React from "react";
 import "../styles.css";
 import { API } from "../backend";
 import Map from "./Map";
+import Chart from "./Chart";
 import Base from "./Base";
 
 const circularProgregessBar = (percentage) => (
@@ -88,6 +89,60 @@ export default function Home() {
       name: "Annual Patients",
     },
   ];
+
+  const chartDatas = [
+    {
+      data: {
+        labels: ["Women", "Men", "Total"],
+        datasets: [
+          {
+            label: "Potential Audience Size",
+            backgroundColor: "rgb(46,157,190)",
+            borderColor: "rgb(255, 99, 132)",
+            data: [5000, 6000, 5100],
+          },
+        ],
+      },
+      desc: `Estimated Daily Audience
+             size - 1.6K - 4.8K people`,
+    },
+    {
+      data: {
+        labels: ["Top 5%", "5%-10%", "10%-15%", "15%-20%"],
+        datasets: [
+          {
+            label: "Average Household Income",
+            backgroundColor: "rgb(46,157,190)",
+            borderColor: "rgb(255, 99, 132)",
+            data: [4500, 5600, 4600, 5700],
+          },
+        ],
+      },
+      desc:
+        "This is a breakdown of the average household income based on publicly availableon Targeted Area",
+    },
+    {
+      data: {
+        labels: [
+          "Skin Tightening",
+          "Wrinkle reduction",
+          "Face Tightening",
+          "Body Conturing",
+        ],
+        datasets: [
+          {
+            label: "Targeted Audience Interests",
+            backgroundColor: "rgb(46,157,190)",
+            borderColor: "rgb(255, 99, 132)",
+            data: [4500, 5600, 4600, 4600],
+          },
+        ],
+      },
+      desc:
+        "This is a breakdow of people who have expressed in service related to Tempsure",
+    },
+  ];
+
   return (
     <Base>
       <div className="mycontainer">
@@ -178,6 +233,14 @@ export default function Home() {
           <div className="col-12 col-md-6 p-2 py-4">
             <Map />
           </div>
+        </div>
+        <div className="row mt-3 rounded">
+          {chartDatas.map((chartData) => (
+            <div className="col-12 col-md-6 p-2 py-4 m-auto">
+              <div>{Chart(chartData.data)} </div>
+              <h3 className="text-warning ml-5">{chartData.desc}</h3>
+            </div>
+          ))}
         </div>
       </div>
     </Base>
