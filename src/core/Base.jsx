@@ -11,6 +11,20 @@ const Base = ({ children }) => (
       </div>
       <div className="col-md-10 col-12 py-3">
         <b>Laser Liposuction / Fat Transfer</b>
+        <div className="float-right">
+          <img
+            src="https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png"
+            alt=""
+            width={50}
+            className=" mr-4 ro"
+          />
+          <span>Ramon Ridwan</span>
+          <i
+            className="fa fa-bell ml-4"
+            aria-hidden="true"
+            style={{ fontSize: "32px", lineHeight: "1px" }}
+          ></i>
+        </div>
       </div>
     </div>
     <div>
