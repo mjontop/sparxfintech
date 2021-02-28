@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 
 const Chart = (data) => {
-  console.log("data is", data);
   return (
     <>
       <Bar
@@ -11,14 +10,21 @@ const Chart = (data) => {
           scales: {
             xAxes: [
               {
-                maxBarThickness: 40,
+                maxBarThickness: "40",
+                ticks: {
+                  fontSize: 16,
+                  fontColor: "black",
+                },
               },
             ],
             yAxes: [
               {
                 ticks: {
                   beginAtZero: true,
-                  max: 10000,
+                  max: 7000,
+                  fontColor: "black",
+                  fontSize: 20,
+                  fontFamily: "Raleway",
                 },
               },
             ],
@@ -26,6 +32,8 @@ const Chart = (data) => {
           legend: {
             labels: {
               fontColor: "#2e9dbe",
+              fontSize: 24,
+              fontFamily: "Raleway",
             },
           },
         }}

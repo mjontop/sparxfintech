@@ -236,9 +236,9 @@ export default function Home() {
         </div>
         <div className="row mt-3 rounded">
           {chartDatas.map((chartData) => (
-            <div className="col-12 col-md-6 p-2 py-4 m-auto">
-              <div>{Chart(chartData.data)} </div>
-              <h3 className="text-warning ml-5">{chartData.desc}</h3>
+            <div className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1">
+              <div className="pt-4 pb-2">{Chart(chartData.data)} </div>
+              <h4 className="text-warning ml-5">{chartData.desc}</h4>
             </div>
           ))}
         </div>
