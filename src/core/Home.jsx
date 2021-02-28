@@ -1,5 +1,4 @@
 import React from "react";
-import { Dropdown } from "react-bootstrap";
 import "../styles.css";
 import { API } from "../backend";
 import Map from "./Map";
@@ -40,21 +39,20 @@ const circularProgregessBar = (percentage) => (
 );
 
 const dottedDropDown = () => (
-  <Dropdown>
-    <Dropdown.Toggle
-      variant=""
-      id="dropdown-basic"
-      style={{ fontSize: "32px", lineHeight:'0.5px', fontWeight: '1000' }}
+  <div className="dropdown">
+    <button
+      className="btn dropdown-toggle pb-3"
+      type="button"
+      data-toggle="dropdown"
+      style={{ fontWeight: 1000, fontSize: "32px", lineHeight: "0.5px" }}
     >
-      . . .
-    </Dropdown.Toggle>
-
-    <Dropdown.Menu>
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
+      ...
+    </button>
+    <ul className="dropdown-menu ">
+      <li>View</li>
+      <li>Delete</li>
+    </ul>
+  </div>
 );
 
 export default function Home() {
@@ -209,8 +207,8 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {tableDatas.map((tableData) => (
-                <tr>
+              {tableDatas.map((tableData, index) => (
+                <tr key={index}>
                   <td scope="row">{tableData.demography}</td>
                   <td>{tableData.zipcode}</td>
                   <td>{tableData.market}</td>
@@ -222,6 +220,7 @@ export default function Home() {
                       min="0"
                       max="100"
                       value={tableData.marketVariable.data}
+                      onChange={() => console.log("changed")}
                     />
                   </td>
                 </tr>
@@ -230,8 +229,11 @@ export default function Home() {
           </table>
         </div>
         <div className="row mt-4">
-          {annualCarddata.map((data) => (
-            <div className="col-md-3 col-12 shadow mx-auto rounded10 bg-white">
+          {annualCarddata.map((data, index) => (
+            <div
+              className="col-md-3 col-12 shadow mx-auto rounded10 bg-white"
+              key={index}
+            >
               <div className="p-2 row  m-1">
                 <div className="w-100">
                   <div className="float-right">{dottedDropDown()}</div>
@@ -259,8 +261,11 @@ export default function Home() {
           </div>
         </div>
         <div className="row mt-3 rounded">
-          {chartDatas.map((chartData) => (
-            <div className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1 shadow ">
+          {chartDatas.map((chartData, index) => (
+            <div
+              className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1 shadow "
+              key={index}
+            >
               <div className="mt-2 float-right">{dottedDropDown()}</div>
               <div className="pt-4 pb-2">{Chart(chartData.data)} </div>
               <h4 className="text-warning ml-5">{chartData.desc}</h4>

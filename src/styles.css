@@ -45,7 +45,19 @@ th {
 .dropdown-toggle::after {
   display: none;
 }
+.dropdown-toggle:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
 
+.dropdown-menu > li {
+  padding: 2px;
+}
+.dropdown-menu > li:hover {
+  background: #2e9dbe;
+  cursor: pointer;
+  color: white;
+}
 
 @media only screen and (max-width: 768px) {
   .screen-sm-hidden {
@@ -1556,3 +1568,15 @@ Due to the split circle of progress-left and progress right, we must use the ani
 }
 
 /*  End Circle progressCircle bar */
+
+.test {
+  height: 100px;
+  width: 100px;
+  background-color: red;
+}
+
+.test:hover {
+  z-index: 1;
+  background: green;
+  cursor: pointer;
+}

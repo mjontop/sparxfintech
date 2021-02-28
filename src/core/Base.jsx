@@ -14,7 +14,7 @@ const Base = ({ children }) => (
       </div>
     </div>
     <div>
-      <div className="row pb-3  ">
+      <div className="row pb-3 ">
         <div className="col-md-2 right-shadow pt-5 screen-sm-hidden">
           <button className="btn btn-primary btn-block rounded text-left py-3 hide-2x">
             Overview
@@ -23,12 +23,7 @@ const Base = ({ children }) => (
             Logout
           </button>
         </div>
-        <div
-          className=" col-12  col-md-10 pt-5"
-          style={{ backgroundColor: "#ffffe5", zIndex: -1 }}
-        >
-          {children}
-        </div>
+        <div className=" col-12  col-md-10 pt-5">{children}</div>
       </div>
     </div>
   </>
