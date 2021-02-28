@@ -1,4 +1,5 @@
 import React from "react";
+import { Dropdown } from "react-bootstrap";
 import "../styles.css";
 import { API } from "../backend";
 import Map from "./Map";
@@ -8,17 +9,20 @@ import Base from "./Base";
 const circularProgregessBar = (percentage) => (
   <div className="row">
     <div className="col-12 col-md-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-3 col-md-2">
-            <div class="progress" data-percentage={100 - parseInt(percentage)}>
-              <span class="progress-left">
-                <span class="progress-bar"></span>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-3 col-md-2">
+            <div
+              className="progress"
+              data-percentage={100 - parseInt(percentage)}
+            >
+              <span className="progress-left">
+                <span className="progress-bar"></span>
               </span>
-              <span class="progress-right">
-                <span class="progress-bar"></span>
+              <span className="progress-right">
+                <span className="progress-bar"></span>
               </span>
-              <div class="progress-value ml-4">
+              <div className="progress-value ml-4">
                 <div>
                   {percentage}%
                   <br />
@@ -33,6 +37,24 @@ const circularProgregessBar = (percentage) => (
     <div className="col-12 col-md-4"></div>
     <div className="col-12 col-md-4"></div>
   </div>
+);
+
+const dottedDropDown = () => (
+  <Dropdown>
+    <Dropdown.Toggle
+      variant=""
+      id="dropdown-basic"
+      style={{ fontSize: "32px", lineHeight:'0.5px', fontWeight: '1000' }}
+    >
+      . . .
+    </Dropdown.Toggle>
+
+    <Dropdown.Menu>
+      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
 );
 
 export default function Home() {
@@ -176,7 +198,7 @@ export default function Home() {
         </h3>
         <hr />
         <span className="text-muted">Overview</span>
-        <div className="mt-4 border border-dark rounded p-4 p-md-5">
+        <div className="mt-4 border bg-white rounded10 p-4 p-md-5">
           <table className="table">
             <thead className="text-primary ">
               <tr>
@@ -200,7 +222,6 @@ export default function Home() {
                       min="0"
                       max="100"
                       value={tableData.marketVariable.data}
-                      id="customRange2"
                     />
                   </td>
                 </tr>
@@ -208,15 +229,18 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-        <div className="row mt-2">
+        <div className="row mt-4">
           {annualCarddata.map((data) => (
-            <div className="col-md-4 col-12">
-              <div className="p-2 row border m-1">
-                <div className="col-4">
+            <div className="col-md-3 col-12 shadow mx-auto rounded10 bg-white">
+              <div className="p-2 row  m-1">
+                <div className="w-100">
+                  <div className="float-right">{dottedDropDown()}</div>
+                </div>
+                <div className="col-6">
                   {circularProgregessBar(data.percentage)}
                 </div>
-                <div className="col-8 align-middle">
-                  <h3 className="mt-20p ml-15p">
+                <div className="col-6 align-middle">
+                  <h3 className="mt-20p ml-4 text-left">
                     <b>{data.name}</b>
                   </h3>
                   <br />
@@ -236,7 +260,8 @@ export default function Home() {
         </div>
         <div className="row mt-3 rounded">
           {chartDatas.map((chartData) => (
-            <div className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1">
+            <div className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1 shadow ">
+              <div className="mt-2 float-right">{dottedDropDown()}</div>
               <div className="pt-4 pb-2">{Chart(chartData.data)} </div>
               <h4 className="text-warning ml-5">{chartData.desc}</h4>
             </div>
