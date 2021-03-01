@@ -3,7 +3,7 @@ import React from "react";
 const Base = ({ children }) => (
   <>
     <div className="row shadow p-3  bg-white rounded">
-      <div className="col-md-2 col-12 text-center">
+      <div className="col-md-2 col-12 text-md-center">
         <img
           src="http://myvds.in/design/assets/images/v1126_50.png"
           width={50}
@@ -16,7 +16,7 @@ const Base = ({ children }) => (
             src="https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png"
             alt=""
             width={50}
-            className=" mr-4 ro"
+            className=" mr-4"
           />
           <span>Ramon Ridwan</span>
           <i

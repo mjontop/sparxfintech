@@ -21,7 +21,7 @@ const Chart = (data) => {
               {
                 ticks: {
                   beginAtZero: true,
-                  max: 7000,
+                  max: 6000,
                   fontColor: "black",
                   fontSize: 20,
                   fontFamily: "Raleway",
@@ -36,6 +36,7 @@ const Chart = (data) => {
               fontFamily: "Raleway",
             },
           },
+          
         }}
       />
     </>

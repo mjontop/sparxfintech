@@ -10,7 +10,7 @@ const circularProgregessBar = (percentage) => (
     <div className="col-12 col-md-4">
       <div className="container">
         <div className="row">
-          <div className="col-sm-3 col-md-2">
+          <div className="col-12">
             <div
               className="progress"
               data-percentage={100 - parseInt(percentage)}
@@ -21,7 +21,7 @@ const circularProgregessBar = (percentage) => (
               <span className="progress-right">
                 <span className="progress-bar"></span>
               </span>
-              <div className="progress-value ml-4">
+              <div className="progress-value ml-3 ml-md-4">
                 <div>
                   {percentage}%
                   <br />
@@ -167,7 +167,7 @@ export default function Home() {
     <Base>
       <div className="mycontainer">
         <div className="row">
-          <div className="col-md-3 col-12">
+          <div className="col-md-3 col-12 my-1">
             <input
               type="text"
               className="form-control"
@@ -175,17 +175,17 @@ export default function Home() {
               className="rounded10 border border-primary p-2 w-100"
             />
           </div>
-          <div className="col-md-3 col-12">
+          <div className="col-md-3 col-12 my-1">
             <select className="btn rounded10 border border-primary w-100 py-2">
               <option value="volvo">Medical Center dropDown</option>
             </select>
           </div>
-          <div className="col-md-3 col-12">
+          <div className="col-md-3 col-12 my-1">
             <select className="btn rounded10 border border-primary w-100 py-2">
               <option value="volvo">Treatment Center dropDown</option>
             </select>
           </div>
-          <div className="col-md-3 col-12">
+          <div className="col-md-3 col-12 my-1">
             <select className="btn rounded10 border border-primary w-100 py-2">
               <option value="volvo">Medical Type dropDown</option>
             </select>
@@ -231,7 +231,7 @@ export default function Home() {
         <div className="row mt-4">
           {annualCarddata.map((data, index) => (
             <div
-              className="col-md-3 col-12 shadow mx-auto rounded10 bg-white"
+              className="col-md-6 col-lg-4 my-1 col-12 shadow mx-auto rounded10 bg-white"
               key={index}
             >
               <div className="p-2 row  m-1">
@@ -252,6 +252,7 @@ export default function Home() {
             </div>
           ))}
         </div>
+
         <div className="row bg-primary mt-3 rounded">
           <div className="col-12 col-md-6 p-2 py-4">
             <Map />
@@ -263,12 +264,14 @@ export default function Home() {
         <div className="row mt-3 rounded">
           {chartDatas.map((chartData, index) => (
             <div
-              className="col-12 col-md-5 bg-white mx-auto  rounded10  border my-1 shadow "
+              className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-1 shadow "
               key={index}
             >
               <div className="mt-2 float-right">{dottedDropDown()}</div>
               <div className="pt-4 pb-2">{Chart(chartData.data)} </div>
-              <h4 className="text-warning ml-5">{chartData.desc}</h4>
+              <p className="text-warning ml-5 text-justify">
+                <b>{chartData.desc}</b>
+              </p>
             </div>
           ))}
         </div>

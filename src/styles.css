@@ -142,13 +142,14 @@ th {
 .progress .progress-value {
   display: flex;
   border-radius: 50%;
-  font-size: 36px;
+  /* font-size: 36px; */
+  font-size: 4.2vmin;
   text-align: center;
   line-height: 20px;
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .progress .progress-value div {
