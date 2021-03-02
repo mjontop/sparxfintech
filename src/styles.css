@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
+body {
+  max-width: 98.463vw;
+  height: 100%;
+  margin: 0;
+}
+
 .right-shadow {
   box-shadow: 10px 1px 12px 4px rgb(82 63 105 / 13%);
-  height: 250vh;
 }
 
 .hide-2x {

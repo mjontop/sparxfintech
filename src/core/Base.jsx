@@ -2,7 +2,10 @@ import React from "react";
 
 const Base = ({ children }) => (
   <>
-    <div className="row shadow p-3  bg-white rounded">
+    <div
+      className="row shadow p-3  bg-white rounded"
+     
+    >
       <div className="col-md-2 col-12 text-md-center">
         <img
           src="http://myvds.in/design/assets/images/v1126_50.png"

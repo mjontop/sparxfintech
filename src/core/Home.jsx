@@ -61,34 +61,43 @@ export default function Home() {
     {
       demography: "Population",
       zipcode: "322382",
-      market: "741258",
+      market: "121333",
       marketVariable: {
-        desc: "adfa",
+        desc: "25 Miles radius  from ZipCode",
         data: 70,
       },
     },
     {
-      demography: "Ropulfgsdfgation",
-      zipcode: "325345382",
-      market: "74124558",
+      demography: "Female",
+      zipcode: "33243",
+      market: "211212",
       marketVariable: {
-        desc: "avdfasdagadfa",
+        desc: "$2,000 - $5000 Avg Patients",
         data: 90,
       },
     },
     {
-      demography: "Mdgakfdsajkpulation",
-      zipcode: "324332452382",
-      market: "7414523258",
+      demography: "Male",
+      zipcode: "32323",
+      market: "12321323",
       marketVariable: {
-        desc: "adfgsafdfa",
+        desc: "20% prospects Coverted",
         data: 30,
       },
     },
     {
-      demography: "Tadfjalkjdfopulation",
-      zipcode: "3243542382",
-      market: "741245258",
+      demography: "Average Income",
+      zipcode: "$33433",
+      market: "231212",
+      marketVariable: {
+        desc: "adasdfasdfa",
+        data: 200,
+      },
+    },
+    {
+      demography: "Home Value",
+      zipcode: "$33433",
+      market: "21212121",
       marketVariable: {
         desc: "adasdfasdfa",
         data: 200,
@@ -191,7 +200,8 @@ export default function Home() {
         </h3>
         <hr />
         <span className="text-muted">Overview</span>
-        <div className="mt-4 border bg-white rounded10 p-4 p-md-5">
+        <div className="mt-4 border bg-white rounded10 p-4 p-md-5 shadow">
+          <div className="float-right">{dottedDropDown()}</div>
           <table className="table">
             <thead className="text-primary ">
               <tr>
@@ -249,14 +259,15 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="row bg-primary mt-3 rounded">
-          <div className="col-12 col-md-6 p-2 py-4">
+        <div className="row bg-primary mt-4 mx-3 border rounded10 px-4 shadow">
+          <div className="col-12 col-md-6 p-2 py-4 rounded10">
             <Map />
           </div>
           <div className="col-12 col-md-6 p-2 py-4">
             <Map />
           </div>
         </div>
+
         <div className="row mt-3 rounded">
           {chartDatas.map((chartData, index) => (
             <div
