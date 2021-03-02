@@ -4,6 +4,7 @@ import { API } from "../backend";
 import Map from "./Map";
 import Chart from "./Chart";
 import Base from "./Base";
+import graphIco from "../assets/graphIcon.png";
 
 const circularProgregessBar = (percentage) => (
   <div className="row">
@@ -82,26 +83,13 @@ export default function Home() {
       market: "12321323",
       marketVariable: {
         desc: "20% prospects Coverted",
-        data: 30,
+        data: 100,
       },
     },
     {
       demography: "Average Income",
       zipcode: "$33433",
       market: "231212",
-      marketVariable: {
-        desc: "adasdfasdfa",
-        data: 200,
-      },
-    },
-    {
-      demography: "Home Value",
-      zipcode: "$33433",
-      market: "21212121",
-      marketVariable: {
-        desc: "adasdfasdfa",
-        data: 200,
-      },
     },
   ];
   const annualCarddata = [
@@ -208,7 +196,9 @@ export default function Home() {
                 <th scope="col">Demographic</th>
                 <th scope="col">Zipcode</th>
                 <th scope="col">Market</th>
-                <th scope="col">Market Variables</th>
+                <th scope="col" className="text-dark">
+                  Market Variables
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -218,15 +208,21 @@ export default function Home() {
                   <td>{tableData.zipcode}</td>
                   <td>{tableData.market}</td>
                   <td>
-                    {tableData.marketVariable.desc} <br />
-                    <input
-                      type="range"
-                      className="form-range w-100 text-danger"
-                      min="0"
-                      max="100"
-                      value={tableData.marketVariable.data}
-                      onChange={() => console.log("changed")}
-                    />
+                    <b>
+                      {!!tableData.marketVariable &&
+                        tableData.marketVariable.desc}
+                    </b>
+                    <br />
+                    {!!tableData.marketVariable && (
+                      <input
+                        type="range"
+                        className="form-range w-100 text-danger"
+                        min="0"
+                        max="100"
+                        value={tableData.marketVariable.data}
+                        onChange={() => console.log("changed")}
+                      />
+                    )}
                   </td>
                 </tr>
               ))}
@@ -252,7 +248,10 @@ export default function Home() {
                     <b>{data.name}</b>
                   </h3>
                   <br />
-                  <h5 className="ml-15p">{data.percentage}%</h5>
+                  <h5 className="ml-15p text-darkorange">
+                    {data.percentage}%
+                    {/* <img src={graphIco} alt="" className="img-fluid d-inline" /> */}
+                  </h5>
                 </div>
               </div>
             </div>
@@ -271,7 +270,7 @@ export default function Home() {
         <div className="row mt-3 rounded">
           {chartDatas.map((chartData, index) => (
             <div
-              className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-1 shadow "
+              className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-5 shadow "
               key={index}
             >
               <div className="mt-2 float-right">{dottedDropDown()}</div>
@@ -283,7 +282,7 @@ export default function Home() {
 
               <br />
               <div className="pt-4 pb-2">{Chart(chartData.data)}</div>
-              <p className="text-warning ml-5 text-justify">
+              <p className="text-darkorange ml-5 text-justify">
                 <b>{chartData.desc}</b>
               </p>
             </div>

@@ -32,6 +32,13 @@ body {
   background-color: #2e9dbe !important;
 }
 
+.bg-grad {
+  background: linear-gradient(#359dbe, #00d1ff) !important;
+  border: none;
+}
+.text-darkorange{
+  color: #F5B229;
+}
 .bg-grey {
   background-color: lightgrey !important;
 }
@@ -100,7 +107,7 @@ th {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 1.2vmin solid yellow;
+  border: 1.2vmin solid #F5B229;
   position: absolute;
   top: 0;
   left: 0;
