@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
 
 const Chart = (data) => {
@@ -35,6 +35,7 @@ const Chart = (data) => {
               fontSize: 24,
               fontFamily: "Raleway",
             },
+            display: false,
           },
         }}
       />

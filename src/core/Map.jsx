@@ -20,6 +20,9 @@ class Map extends Component {
           //   bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          options={{
+            styles: [{ stylers: [{ saturation: 50 }, { gamma: 0.5 }] }],
+          }}
         >
           <AnyReactComponent lat={28.7041} lng={-77.1025} text="My Marker" />
         </GoogleMapReact>

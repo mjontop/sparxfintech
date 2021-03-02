@@ -116,7 +116,7 @@ export default function Home() {
         labels: ["Women", "Men", "Total"],
         datasets: [
           {
-            label: "Potential Audience Size",
+            labelHead: "Potential Audience Size",
             backgroundColor: "rgb(46,157,190)",
             borderColor: "rgb(255, 99, 132)",
             data: [5000, 6000, 5100],
@@ -131,7 +131,7 @@ export default function Home() {
         labels: ["Top 5%", "5%-10%", "10%-15%", "15%-20%"],
         datasets: [
           {
-            label: "Average Household Income",
+            labelHead: "Average Household Income",
             backgroundColor: "rgb(46,157,190)",
             borderColor: "rgb(255, 99, 132)",
             data: [4500, 5600, 4600, 5700],
@@ -143,15 +143,10 @@ export default function Home() {
     },
     {
       data: {
-        labels: [
-          "Skin Tightening",
-          "Wrinkle reduction",
-          "Face Tightening",
-          "Body Conturing",
-        ],
+        labels: ["Skin", "Wrinkle", "Face", "Body"],
         datasets: [
           {
-            label: "Targeted Audience Interests",
+            labelHead: "Targeted Audience Interests",
             backgroundColor: "rgb(46,157,190)",
             borderColor: "rgb(255, 99, 132)",
             data: [4500, 5600, 4600, 4600],
@@ -172,7 +167,7 @@ export default function Home() {
               type="text"
               className="form-control"
               placeholder="Search place, address, pincode"
-              className="rounded10 border border-primary p-2 w-100"
+              className="rounded10 border border-primary p-2 w-100 no-focus-border"
             />
           </div>
           <div className="col-md-3 col-12 my-1">
@@ -216,7 +211,7 @@ export default function Home() {
                     {tableData.marketVariable.desc} <br />
                     <input
                       type="range"
-                      className="form-range w-100"
+                      className="form-range w-100 text-danger"
                       min="0"
                       max="100"
                       value={tableData.marketVariable.data}
@@ -233,6 +228,7 @@ export default function Home() {
             <div
               className="col-md-6 col-lg-4 my-1 col-12 shadow mx-auto rounded10 bg-white"
               key={index}
+              style={{ maxWidth: "400px" }}
             >
               <div className="p-2 row  m-1">
                 <div className="w-100">
@@ -268,7 +264,14 @@ export default function Home() {
               key={index}
             >
               <div className="mt-2 float-right">{dottedDropDown()}</div>
-              <div className="pt-4 pb-2">{Chart(chartData.data)} </div>
+              <div className="text-center text-primary py-4">
+                <b style={{ fontSize: "3vmin" }}>
+                  {chartDatas[index].data.datasets[0].labelHead}
+                </b>
+              </div>
+
+              <br />
+              <div className="pt-4 pb-2">{Chart(chartData.data)}</div>
               <p className="text-warning ml-5 text-justify">
                 <b>{chartData.desc}</b>
               </p>

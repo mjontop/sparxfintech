@@ -95,7 +95,7 @@ th {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 7px solid yellow;
+  border: 1.2vmin solid yellow;
   position: absolute;
   top: 0;
   left: 0;
@@ -118,7 +118,7 @@ th {
   width: 100%;
   height: 100%;
   background: none;
-  border-width: 7px;
+  border-width: 1.2vmin;
   border-style: solid;
   position: absolute;
   top: 0;
@@ -1578,14 +1578,6 @@ Due to the split circle of progress-left and progress right, we must use the ani
 
 /*  End Circle progressCircle bar */
 
-.test {
-  height: 100px;
-  width: 100px;
-  background-color: red;
-}
-
-.test:hover {
-  z-index: 1;
-  background: green;
-  cursor: pointer;
+.no-focus-border:focus {
+  border: none !important;
 }
