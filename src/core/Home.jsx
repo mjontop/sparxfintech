@@ -208,7 +208,7 @@ export default function Home() {
                   <td>{tableData.zipcode}</td>
                   <td>{tableData.market}</td>
                   <td>
-                    <b>
+                    <b className="font-raleway">
                       {!!tableData.marketVariable &&
                         tableData.marketVariable.desc}
                     </b>
@@ -249,8 +249,7 @@ export default function Home() {
                   </h3>
                   <br />
                   <h5 className="ml-15p text-darkorange">
-                    {data.percentage}%
-                    {/* <img src={graphIco} alt="" className="img-fluid d-inline" /> */}
+                    {data.percentage}% <i class="fa fa-caret-down"></i>
                   </h5>
                 </div>
               </div>
@@ -259,7 +258,7 @@ export default function Home() {
         </div>
 
         <div className="row bg-primary mt-4 mx-3 border rounded10 px-4 shadow">
-          <div className="col-12 col-md-6 p-2 py-4 rounded10">
+          <div className="col-12 col-md-6 p-2 py-4">
             <Map />
           </div>
           <div className="col-12 col-md-6 p-2 py-4">

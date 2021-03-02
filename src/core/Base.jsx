@@ -15,7 +15,7 @@ const Base = ({ children }) => (
         <div className="float-right">
           <img src={profilePic} alt="" width={50} className=" mr-4" />
           <span>Ramon Ridwan</span>
-          <img src={bellIcon} alt="" width={50} className="mx-4" />
+          <img src={bellIcon} alt="" width={24} className="mx-4" />
         </div>
       </div>
     </div>

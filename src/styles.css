@@ -20,7 +20,9 @@ body {
   margin-left: 1%;
   margin-right: 2%;
 }
-
+.font-raleway {
+  font-family: "Raleway";
+}
 .rounded10 {
   border-radius: 20px;
 }
@@ -36,8 +38,8 @@ body {
   background: linear-gradient(#359dbe, #00d1ff) !important;
   border: none;
 }
-.text-darkorange{
-  color: #F5B229;
+.text-darkorange {
+  color: #f5b229;
 }
 .bg-grey {
   background-color: lightgrey !important;
@@ -107,7 +109,7 @@ th {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 1.2vmin solid #F5B229;
+  border: 1.2vmin solid #f5b229;
   position: absolute;
   top: 0;
   left: 0;
