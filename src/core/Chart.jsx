@@ -10,7 +10,7 @@ const Chart = (data) => {
           scales: {
             xAxes: [
               {
-                maxBarThickness: "40",
+                maxBarThickness: "20",
                 ticks: {
                   fontSize: 16,
                   fontColor: "black",
@@ -36,7 +36,6 @@ const Chart = (data) => {
               fontFamily: "Raleway",
             },
           },
-          
         }}
       />
     </>
