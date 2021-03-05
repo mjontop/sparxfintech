@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles.css";
+import { login } from "./helper";
 
 export default function Login() {
   return (
@@ -31,7 +32,7 @@ export default function Login() {
         <div className="col-md-8 col-12" style={{ marginTop: "10vh" }}>
           <div className="container ">
             <div
-              className="bg-grey   rounded10  text-center text-white  py-5"
+              className="bg-grey  rounded10  text-center text-white  py-5"
               style={{
                 maxWidth: "500px",
               }}
@@ -72,7 +73,13 @@ export default function Login() {
                     </div>
                   </div>
                   <div className="text-center py-4">
-                    <button className="btn bg-primary text-white py-2 px-5 rounded10">
+                    <button
+                      className="btn bg-primary text-white py-2 px-5 rounded10"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        login();
+                      }}
+                    >
                       <b>Login</b>
                     </button>
                   </div>
