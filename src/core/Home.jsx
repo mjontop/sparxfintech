@@ -4,7 +4,7 @@ import { API } from "../backend";
 import Map from "./Map";
 import Chart from "./Chart";
 import Base from "./Base";
-import graphIco from "../assets/graphIcon.png";
+import Slider from "@material-ui/core/Slider";
 
 const circularProgregessBar = (percentage) => (
   <div className="row">
@@ -74,7 +74,7 @@ export default function Home() {
       market: "211212",
       marketVariable: {
         desc: "$2,000 - $5000 Avg Patients",
-        data: 90,
+        data: [20, 50],
       },
     },
     {
@@ -82,7 +82,7 @@ export default function Home() {
       zipcode: "32323",
       market: "12321323",
       marketVariable: {
-        desc: "20% prospects Coverted",
+        desc: "20% prospects Converted",
         data: 100,
       },
     },
@@ -136,7 +136,7 @@ export default function Home() {
         ],
       },
       desc:
-        "This is a breakdown of the average household income based on publicly availableon Targeted Area",
+        "This is a breakdown of the average household income based on publicly available on Targeted Area",
     },
     {
       data: {
@@ -151,7 +151,7 @@ export default function Home() {
         ],
       },
       desc:
-        "This is a breakdow of people who have expressed in service related to Tempsure",
+        "This is a breakdow of people who have expressed in service related to Tempsure/ Flexsure",
     },
   ];
 
@@ -189,7 +189,6 @@ export default function Home() {
         <hr />
         <span className="text-muted">Overview</span>
         <div className="mt-4 border bg-white rounded10 p-4 p-md-5 shadow">
-          <div className="float-right">{dottedDropDown()}</div>
           <table className="table">
             <thead className="text-primary ">
               <tr>
@@ -214,13 +213,10 @@ export default function Home() {
                     </b>
                     <br />
                     {!!tableData.marketVariable && (
-                      <input
-                        type="range"
-                        className="form-range w-100 text-danger"
-                        min="0"
-                        max="100"
+                      <Slider
                         value={tableData.marketVariable.data}
-                        onChange={() => console.log("changed")}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
                       />
                     )}
                   </td>
@@ -237,9 +233,7 @@ export default function Home() {
               style={{ maxWidth: "400px" }}
             >
               <div className="p-2 row  m-1">
-                <div className="w-100">
-                  <div className="float-right">{dottedDropDown()}</div>
-                </div>
+                <div className="w-100"></div>
                 <div className="col-6">
                   {circularProgregessBar(data.percentage)}
                 </div>
@@ -261,7 +255,7 @@ export default function Home() {
           <div className="col-12 col-md-6 p-2 py-4">
             <Map />
           </div>
-          <div className="col-12 col-md-6 p-2 py-4">
+          <div className="col-12 col-md-6 p-2 py-4" style={{ left: "24px" }}>
             <Map />
           </div>
         </div>
@@ -272,7 +266,6 @@ export default function Home() {
               className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-5 shadow "
               key={index}
             >
-              <div className="mt-2 float-right">{dottedDropDown()}</div>
               <div className="text-center text-primary py-4">
                 <b style={{ fontSize: "3vmin" }}>
                   {chartDatas[index].data.datasets[0].labelHead}

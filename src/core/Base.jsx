@@ -11,7 +11,7 @@ const Base = ({ children }) => (
         />
       </div>
       <div className="col-md-10 col-12 py-3">
-        <b style={{ fontSize: "32px" }}>Laser Liposuction / Fat Transfer</b>
+        <b style={{ fontSize: "32px" }}>Spark Trending Report</b>
         <div className="float-right">
           <img src={profilePic} alt="" width={50} className=" mr-4" />
           <span>Ramon Ridwan</span>
