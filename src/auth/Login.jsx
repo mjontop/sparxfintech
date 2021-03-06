@@ -3,6 +3,16 @@ import "../styles.css";
 import { login } from "./helper";
 
 export default function Login() {
+  const [user, setUser] = React.useState({
+    email: "",
+    password: "",
+    error: "",
+  });
+  const handleChange = (name) => (event) => {
+    event.preventDefault();
+    setUser({ ...user, [name]: event.target.value });
+  };
+
   return (
     <>
       <div className="row">
@@ -57,6 +67,7 @@ export default function Login() {
                         type="text"
                         className="form-control ml-3 rounded"
                         placeholder="email"
+                        onChange={handleChange("email")}
                       />
                     </div>
                   </div>
@@ -69,19 +80,22 @@ export default function Login() {
                         type="password"
                         className="form-control ml-3 rounded"
                         placeholder="password"
+                        onChange={handleChange("password")}
                       />
                     </div>
                   </div>
                   <div className="text-center py-4">
                     <button
-                      className="btn bg-primary text-white py-2 px-5 rounded10"
+                      className="btn buttonBlue text-white py-2 px-5 rounded10"
                       onClick={(e) => {
                         e.preventDefault();
-                        login();
+                        login(user);
                       }}
                     >
                       <b>Login</b>
                     </button>
+
+                    <h3>{user.error}</h3>
                   </div>
                 </form>
               </div>
