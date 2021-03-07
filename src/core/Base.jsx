@@ -25,7 +25,7 @@ const Base = ({ children }) => (
     </div>
     <div>
       <div className="row pb-3 ">
-        <div className="col-md-2 right-shadow pt-5 screen-sm-hidden">
+        <div className="col-md-2 right-shadow pt-5 screen-sm-hidden" style={{minHeight:'100vh'}}>
           <button className="btn bg-grad btn-block rounded text-left py-3 hide-2x mb-5 text-white text-center">
             <i className="fa fa-eye mx-2" aria-hidden="true"></i> Overview
           </button>

@@ -286,12 +286,22 @@ export default function Home() {
             </select>
           </div>
         </div>
-        <button className="btn buttonBlue my-2 text-white" disabled={!dropDownDataOP.buttonStatus}
-        onClick={(e)=> {
-          e.preventDefault()
-          setDropDownDataOP({...dropDownDataOP, showStats: !dropDownDataOP.showStats})
-        }}
-        >{!dropDownDataOP.showStats? 'Show':'Hide'} Stats</button>
+        <div className="text-center">
+          <button
+            className="btn buttonBlue rounded10  my-2 text-white"
+            disabled={!dropDownDataOP.buttonStatus}
+            onClick={(e) => {
+              e.preventDefault();
+              setDropDownDataOP({
+                ...dropDownDataOP,
+                showStats: !dropDownDataOP.showStats,
+              });
+            }}
+          >
+            {!dropDownDataOP.showStats ? "Show" : "Hide"} Stats
+          </button>
+        </div>
+
         {dropDownDataOP.showStats && (
           <>
             <h3 className="mt-4">
