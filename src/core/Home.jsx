@@ -383,6 +383,13 @@ export default function Home() {
     },
   ];
 
+  const tableDataBottom = [
+    { keywords: "Laser Skin Tightening", avg: "12345678" },
+    { keywords: "Face Tightening", avg: "12345678" },
+    { keywords: "Laser Skin Tightening", avg: "12345678" },
+    { keywords: "Skin Tightening Facial", avg: "12345678" },
+  ];
+
   return (
     <Base>
       <div className="mycontainer">
@@ -552,6 +559,33 @@ export default function Home() {
                   </p>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-4 border bg-white rounded10 p-4 p-md-5 shadow container">
+              <h3 className="text-primary text-center w-100">
+                Search Volume-Tempsure + Flexsure
+              </h3>
+              <table className="table">
+                <thead>
+                  <h3 className="text-primary ">Tempsure/ Flexsure</h3>
+                  <tr>
+                    <th scope="col" className="text-dark">
+                      Keyword
+                    </th>
+                    <th scope="col" className="text-dark">
+                      Avg Searches
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableDataBottom.map((tableData, index) => (
+                    <tr key={index}>
+                      <td scope="row">{tableData.keywords}</td>
+                      <td>{tableData.avg}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </>
         )}
