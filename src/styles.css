@@ -31,9 +31,12 @@
 .bg-primary {
   background-color: #2e9dbe !important;
 }
-.buttonBlue{
+.buttonBlue {
   background-color: #2e9dbe !important;
+}
 
+.MuiSlider-root {
+  color: #2e9dbe !important;
 }
 
 .bg-grad {

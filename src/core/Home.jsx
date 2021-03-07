@@ -56,8 +56,81 @@ const dottedDropDown = () => (
   </div>
 );
 
+const dropdownData = {
+  ALMA: [
+    {
+      "Accent Prime": [
+        "Body Contouring",
+        "body contouring",
+        "body sculpting",
+        "fat removal",
+        "weight loss",
+        "fat reduction",
+        "noninvasive fat reduction",
+        "noninvasive body contouring",
+        "non-surgical fat reduction",
+        "non-surgical body contouring",
+        "no downtime fat reduction",
+        "laser body contouring",
+        "skin tightening",
+        "treatment for sagging skin",
+        "treatment for loose skin",
+        "cellulite reduction",
+        "rf body contouring",
+        "ultrasound body contouring",
+      ],
+    },
+    {
+      "Alma Q": [
+        "laser resurfacing",
+        "laser skin treatments",
+        "stretch mark removal",
+        "skin rejuvenation",
+        "skin resurfacing",
+        "anti-aging treatment",
+        "skin tightening",
+        "laser skin resurfacing",
+        "acne scar reduction",
+        "scar reduction",
+        "treatment for brown spots",
+        "treatment for redness",
+        "rosacea treatment",
+        "sun damage treatment",
+        "facial vein treatment",
+        "leg vein treatment",
+        "tattoo removal",
+        "laser facial",
+        "scar removal",
+        "acne removal",
+        "photo facial",
+        "laser tattoo removal",
+      ],
+    },
+    {
+      BeautiFill: [
+        "liposuction",
+        "laser lipo",
+        "fat transfer",
+        "fat grafting",
+        "laser skin treatments",
+        "skin rejuvenation",
+      ],
+    },
+  ],
+};
 export default function Home() {
   console.log("API IS", API);
+
+  const [dropDownDataOP, setDropDownDataOP] = React.useState({
+    comp: "",
+    type: "",
+    keywords: "",
+  });
+  const handleChange = (name) => (event) => {
+    event.preventDefault();
+    setDropDownDataOP({ ...dropDownDataOP, [name]: event.target.value });
+  };
+
   const tableDatas = [
     {
       demography: "Population",
@@ -168,18 +241,39 @@ export default function Home() {
             />
           </div>
           <div className="col-md-3 col-12 my-1">
-            <select className="btn rounded10 border border-primary w-100 py-2">
-              <option value="volvo">Medical Center dropDown</option>
+            <select
+              className="btn rounded10 border border-primary w-100 py-2"
+              onChange={handleChange("comp")}
+            >
+              <option value="none">Laser company</option>
+              {Object.keys(dropdownData).map((data) => (
+                <option value={data}>{data}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col-md-3 col-12 my-1">
+            <select
+              className="btn rounded10 border border-primary w-100 py-2"
+              onChange={handleChange("type")}
+            >
+              <option value="">Laser Type</option>
+              {dropDownDataOP["comp"] !== "" &&
+                dropdownData[dropDownDataOP["comp"]].map((data) => (
+                  <option value={Object.keys(data)}>{Object.keys(data)}</option>
+                ))}
             </select>
           </div>
           <div className="col-md-3 col-12 my-1">
             <select className="btn rounded10 border border-primary w-100 py-2">
-              <option value="volvo">Treatment Center dropDown</option>
-            </select>
-          </div>
-          <div className="col-md-3 col-12 my-1">
-            <select className="btn rounded10 border border-primary w-100 py-2">
-              <option value="volvo">Medical Type dropDown</option>
+              <option value="">Keywords</option>
+              {dropDownDataOP["type"] !== "" &&
+                dropdownData[dropDownDataOP["comp"]].map((data, index) => {
+                  if (Object.keys(data)[0] === dropDownDataOP["type"]) {
+                    return Object.values(data)[0].map((d) => (
+                      <option value={d}>{d}</option>
+                    ));
+                  }
+                })}
             </select>
           </div>
         </div>
@@ -243,7 +337,7 @@ export default function Home() {
                   </h3>
                   <br />
                   <h5 className="ml-15p text-darkorange">
-                    {data.percentage}% <i class="fa fa-caret-down"></i>
+                    {data.percentage}% <i className="fa fa-caret-down"></i>
                   </h5>
                 </div>
               </div>
