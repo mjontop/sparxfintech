@@ -1,8 +1,11 @@
 import React from "react";
+import {useHistory} from 'react-router-dom'
 import "../styles.css";
-import { login } from "./helper";
+import { login, isAutheticated } from "./helper";
 
 export default function Login() {
+  let history = useHistory()
+  if (isAutheticated())  history.push('/dashboard')
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -12,6 +15,13 @@ export default function Login() {
     event.preventDefault();
     setUser({ ...user, [name]: event.target.value });
   };
+
+  const handleLogin = async ()=>{
+    const {success} = await login(user)
+    if(success){
+      history.push('/dashboard')
+    }
+  }
 
   return (
     <>
@@ -89,7 +99,7 @@ export default function Login() {
                       className="btn buttonBlue text-white py-2 px-5 rounded10"
                       onClick={(e) => {
                         e.preventDefault();
-                        login(user);
+                        handleLogin()
                       }}
                     >
                       <b>Login</b>

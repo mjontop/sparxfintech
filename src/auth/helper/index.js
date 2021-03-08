@@ -6,9 +6,9 @@ export const login = async (user) => {
   const { token } = data;
   if (!!data.token && typeof window !== "undefined") {
     authenticate(token);
-    window.location.href = "/";
+    return {success:true}
   }
-  return data.message
+  return {success: false, message: data.message}
 };
 
 export const SignUphelper = (user) => {
@@ -26,7 +26,7 @@ export const signout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("user");
   }
-  window.location.reload();
+  window.location.href = '/'
 };
 
 export const isAutheticated = () => {

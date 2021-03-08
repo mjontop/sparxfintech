@@ -24,7 +24,7 @@ const circularProgregessBar = (percentage) => (
               </span>
               <div className="progress-value ml-3 ml-md-4">
                 <div>
-                  {percentage}%
+                  {percentage}
                   <br />
                   <span>completed</span>
                 </div>
@@ -461,7 +461,7 @@ export default function Home() {
         {dropDownDataOP.showStats && (
           <>
             <h3 className="mt-4">
-              <b>Laser Liposuction / Fat Transfer</b>
+              <b>{dropDownDataOP.comp} / {dropDownDataOP.type}</b>
             </h3>
             <hr />
             <span className="text-muted">Overview</span>
