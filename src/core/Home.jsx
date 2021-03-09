@@ -6,38 +6,40 @@ import Base from "./Base";
 import Slider from "@material-ui/core/Slider";
 import { getZipData } from "./helper/coreapicalls";
 
-const circularProgregessBar = (percentage) => (
-  <div className="row">
-    <div className="col-12 col-md-4">
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div
-              className="progress"
-              data-percentage={100 - parseInt(percentage)}
-            >
-              <span className="progress-left">
-                <span className="progress-bar"></span>
-              </span>
-              <span className="progress-right">
-                <span className="progress-bar"></span>
-              </span>
-              <div className="progress-value ml-3 ml-md-4">
-                <div>
-                  {percentage}
-                  <br />
-                  <span>completed</span>
+const circularProgregessBar = (percentage, value, annualData) => {
+  return (
+    <div className="row">
+      <div className="col-12 col-md-4">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div
+                className="progress"
+                data-percentage={100 - parseInt(percentage)}
+              >
+                <span className="progress-left">
+                  <span className="progress-bar"></span>
+                </span>
+                <span className="progress-right">
+                  <span className="progress-bar"></span>
+                </span>
+                <div className="progress-value ml-3 ml-md-4">
+                  <div>
+                    {parseFloat(
+                      annualData[Object.keys(annualData)[value]]
+                    ).toFixed(2)}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div className="col-12 col-md-4"></div>
+      <div className="col-12 col-md-4"></div>
     </div>
-    <div className="col-12 col-md-4"></div>
-    <div className="col-12 col-md-4"></div>
-  </div>
-);
+  );
+};
 
 const dottedDropDown = () => (
   <div className="dropdown">
@@ -286,7 +288,29 @@ export default function Home() {
     pop_80_plus: 1702,
   };
 
+  const [annualData, setAnnualData] = React.useState({});
   const [zipcodeData, setZipcodeData] = React.useState({});
+
+  const [sliderData, setSliderData] = React.useState({
+    radius: 10,
+    avgpat: [20, 50],
+    prospacts: 20,
+  });
+
+  const handleSliderChange = (name, value) => (event, value) => {
+    event.preventDefault();
+    if (value < 11) return;
+    setSliderData({ ...sliderData, [name]: value });
+    if (value < 80) {
+      setZipcodeData({
+        ...zipcodeData,
+        population_count: zipcodeData[`pop_${value}_to_${value + 9}`],
+      });
+
+      return;
+    }
+    setZipcodeData({ ...zipcodeData, population_count: 4868 });
+  };
 
   const handleZipChange = (name) => (event) => {
     event.preventDefault();
@@ -294,7 +318,15 @@ export default function Home() {
   };
   const handleSubmit = () => {
     getZipData(zipcodeData.zip)
-      .then(({ data }) => setZipcodeData(data))
+      .then(({ data }) => {
+        setZipcodeData(data);
+        console.log({ zipcodeData });
+        setAnnualData({
+          prospects: data.population_count * 0.005,
+          potential: data.population_count * 0.005 * 0.2,
+          patients: data.population_count * 0.005 * 0.2 * 5500,
+        });
+      })
       .catch((err) => console.log("Error", err));
   };
 
@@ -331,21 +363,6 @@ export default function Home() {
   ];
 
   const chartDatas = [
-    {
-      data: {
-        labels: ["Women", "Men", "Total"],
-        datasets: [
-          {
-            labelHead: "Potential Audience Size",
-            backgroundColor: "rgb(46,157,190)",
-            borderColor: "rgb(255, 99, 132)",
-            data: [5000, 6000, 5100],
-          },
-        ],
-      },
-      desc: `Estimated Daily Audience
-             size - 1.6K - 4.8K people`,
-    },
     {
       data: {
         labels: ["Top 5%", "5%-10%", "10%-15%", "15%-20%"],
@@ -481,10 +498,15 @@ export default function Home() {
                     <td scope="row">{zipcodeData.zip}</td>
                     <td scope="row">{zipcodeData["population_count"]}</td>
                     <td>
+                      <b className="font-raleway">
+                        {sliderData.radius} Miles radius from Zipcode
+                      </b>
                       <Slider
-                        value={10}
+                        value={sliderData.radius}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
+                        onChange={handleSliderChange("radius")}
+                        step={10}
                       />
                     </td>
                   </tr>
@@ -495,10 +517,15 @@ export default function Home() {
                       {zipcodeData["total_female_population"]}
                     </td>
                     <td>
+                      <b className="font-raleway ">
+                        ${sliderData.avgpat[0]}-{sliderData.avgpat[1]} Avg
+                        Patients
+                      </b>
                       <Slider
-                        value={[20, 50]}
+                        value={sliderData.avgpat}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
+                        onChange={handleSliderChange("avgpat")}
                       />
                     </td>
                   </tr>
@@ -508,10 +535,14 @@ export default function Home() {
 
                     <td scope="row">{zipcodeData["total_male_population"]}</td>
                     <td>
+                      <b className="font-raleway ">
+                        {sliderData.prospacts} prospacts Covered
+                      </b>
                       <Slider
-                        value={10}
+                        value={sliderData.prospacts}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
+                        onChange={handleSliderChange("prospacts")}
                       />
                     </td>
                   </tr>
@@ -536,7 +567,11 @@ export default function Home() {
                   <div className="p-2 row  m-1">
                     <div className="w-100"></div>
                     <div className="col-6">
-                      {circularProgregessBar(data.percentage)}
+                      {circularProgregessBar(
+                        data.percentage,
+                        index,
+                        annualData
+                      )}
                     </div>
                     <div className="col-6 align-middle">
                       <h3 className="mt-20p ml-4 text-left">
@@ -565,6 +600,34 @@ export default function Home() {
             </div>
 
             <div className="row mt-3 rounded">
+              <>
+                <div className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-5 shadow ">
+                  <div className="text-center text-primary py-4">
+                    <b style={{ fontSize: "3vmin" }}>Potential Audience Size</b>
+                  </div>
+                  <br />
+                  <div className="pt-4 pb-2">
+                    {Chart({
+                      labels: ["Women", "Men", "Total"],
+                      datasets: [
+                        {
+                          labelHead: "Potential Audience Size",
+                          backgroundColor: "rgb(46,157,190)",
+                          borderColor: "rgb(255, 99, 132)",
+                          data: [
+                            zipcodeData["total_female_population"],
+                            zipcodeData["total_male_population"],
+                            zipcodeData["population_count"],
+                          ],
+                        },
+                      ],
+                    })}
+                  </div>
+                  <p className="text-darkorange ml-5 text-justify">
+                    Estimated Daily Audience size - 1.6K - 4.8K people
+                  </p>
+                </div>
+              </>
               {chartDatas.map((chartData, index) => (
                 <div
                   className="col-12 col-lg-5 bg-white mx-auto  rounded10  border my-5 shadow "

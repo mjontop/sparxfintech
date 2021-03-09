@@ -21,7 +21,7 @@ const Chart = (data) => {
               {
                 ticks: {
                   beginAtZero: true,
-                  max: 6000,
+                  max: 50000,
                   fontColor: "black",
                   fontSize: 20,
                   fontFamily: "Raleway",
