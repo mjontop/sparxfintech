@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles.css";
-import { API } from "../backend";
 import Map from "./Map";
 import Chart from "./Chart";
 import Base from "./Base";
 import Slider from "@material-ui/core/Slider";
+import { getZipData } from "./helper/coreapicalls";
 
 const circularProgregessBar = (percentage) => (
   <div className="row">
@@ -268,7 +268,35 @@ const dropdownData = {
   ],
 };
 export default function Home() {
-  console.log("API IS", API);
+  const tableDatas = {
+    zip: "623",
+    country: "US",
+    approximate_latitude: "18.08",
+    approximate_longitude: "-67.14",
+    population_count: 43061,
+    total_male_population: 20603,
+    total_female_population: 22458,
+    pop_under_10: 5319,
+    pop_20_to_29: 4868,
+    pop_30_to_39: 6096,
+    pop_40_to_49: 5740,
+    pop_50_to_59: 4889,
+    pop_60_to_69: 5047,
+    pop_70_to_79: 3215,
+    pop_80_plus: 1702,
+  };
+
+  const [zipcodeData, setZipcodeData] = React.useState({});
+
+  const handleZipChange = (name) => (event) => {
+    event.preventDefault();
+    setZipcodeData({ ...zipcodeData, zip: event.target.value });
+  };
+  const handleSubmit = () => {
+    getZipData(zipcodeData.zip)
+      .then(({ data }) => setZipcodeData(data))
+      .catch((err) => console.log("Error", err));
+  };
 
   const [dropDownDataOP, setDropDownDataOP] = React.useState({
     comp: "",
@@ -283,43 +311,10 @@ export default function Home() {
     setDropDownDataOP({ ...dropDownDataOP, [name]: event.target.value });
     if (dropDownDataOP.comp !== "" && dropDownDataOP.type !== "") {
       setDropDownDataOP({ ...dropDownDataOP, buttonStatus: true });
+      handleSubmit();
     }
   };
 
-  const tableDatas = [
-    {
-      demography: "Population",
-      zipcode: "322382",
-      market: "121333",
-      marketVariable: {
-        desc: "25 Miles radius  from ZipCode",
-        data: 70,
-      },
-    },
-    {
-      demography: "Female",
-      zipcode: "33243",
-      market: "211212",
-      marketVariable: {
-        desc: "$2,000 - $5000 Avg Patients",
-        data: [20, 50],
-      },
-    },
-    {
-      demography: "Male",
-      zipcode: "32323",
-      market: "12321323",
-      marketVariable: {
-        desc: "20% prospects Converted",
-        data: 100,
-      },
-    },
-    {
-      demography: "Average Income",
-      zipcode: "$33433",
-      market: "231212",
-    },
-  ];
   const annualCarddata = [
     {
       percentage: 11.8,
@@ -400,6 +395,7 @@ export default function Home() {
               className="form-control"
               placeholder="Search place, address, pincode"
               className="rounded10 border border-primary p-2 w-100 no-focus-border"
+              onChange={handleZipChange("zip")}
             />
           </div>
           <div className="col-md-3 col-12 my-1">
@@ -461,7 +457,9 @@ export default function Home() {
         {dropDownDataOP.showStats && (
           <>
             <h3 className="mt-4">
-              <b>{dropDownDataOP.comp} / {dropDownDataOP.type}</b>
+              <b>
+                {dropDownDataOP.comp} / {dropDownDataOP.type}
+              </b>
             </h3>
             <hr />
             <span className="text-muted">Overview</span>
@@ -478,27 +476,53 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {tableDatas.map((tableData, index) => (
-                    <tr key={index}>
-                      <td scope="row">{tableData.demography}</td>
-                      <td>{tableData.zipcode}</td>
-                      <td>{tableData.market}</td>
-                      <td>
-                        <b className="font-raleway">
-                          {!!tableData.marketVariable &&
-                            tableData.marketVariable.desc}
-                        </b>
-                        <br />
-                        {!!tableData.marketVariable && (
-                          <Slider
-                            value={tableData.marketVariable.data}
-                            valueLabelDisplay="auto"
-                            aria-labelledby="range-slider"
-                          />
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                  <tr>
+                    <td scope="row">Population</td>
+                    <td scope="row">{zipcodeData.zip}</td>
+                    <td scope="row">{zipcodeData["population_count"]}</td>
+                    <td>
+                      <Slider
+                        value={10}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Female</td>
+                    <td scope="row">{zipcodeData.zip}</td>
+                    <td scope="row">
+                      {zipcodeData["total_female_population"]}
+                    </td>
+                    <td>
+                      <Slider
+                        value={[20, 50]}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Male</td>
+                    <td scope="row">{zipcodeData.zip}</td>
+
+                    <td scope="row">{zipcodeData["total_male_population"]}</td>
+                    <td>
+                      <Slider
+                        value={10}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Average Income </td>
+                    <td scope="row">{zipcodeData.zip}</td>
+
+                    <td scope="row">
+                      ${Math.floor(Math.random() * 100000 + 1)}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
