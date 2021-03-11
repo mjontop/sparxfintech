@@ -420,8 +420,10 @@ export default function Home() {
               onChange={handleChange("comp")}
             >
               <option value="none">Laser company</option>
-              {Object.keys(dropdownData).map((data) => (
-                <option value={data}>{data}</option>
+              {Object.keys(dropdownData).map((data, index) => (
+                <option key={index} value={data}>
+                  {data}
+                </option>
               ))}
             </select>
           </div>
@@ -432,8 +434,10 @@ export default function Home() {
             >
               <option value="">Laser Type</option>
               {dropDownDataOP["comp"] !== "" &&
-                dropdownData[dropDownDataOP["comp"]].map((data) => (
-                  <option value={Object.keys(data)}>{Object.keys(data)}</option>
+                dropdownData[dropDownDataOP["comp"]].map((data, index) => (
+                  <option key={index} value={Object.keys(data)}>
+                    {Object.keys(data)}
+                  </option>
                 ))}
             </select>
           </div>
@@ -446,8 +450,10 @@ export default function Home() {
               {dropDownDataOP["type"] !== "" &&
                 dropdownData[dropDownDataOP["comp"]].map((data, index) => {
                   if (Object.keys(data)[0] === dropDownDataOP["type"]) {
-                    return Object.values(data)[0].map((d) => (
-                      <option value={d}>{d}</option>
+                    return Object.values(data)[0].map((d, i) => (
+                      <option key={i} value={d}>
+                        {d}
+                      </option>
                     ));
                   }
                 })}
@@ -517,8 +523,8 @@ export default function Home() {
                     </td>
                     <td>
                       <b className="font-raleway ">
-                        ${sliderData.avgpat[0]*100}-{sliderData.avgpat[1]*100} Avg
-                        Patients
+                        ${sliderData.avgpat[0] * 100}-
+                        {sliderData.avgpat[1] * 100} Avg Patients
                       </b>
                       <Slider
                         value={sliderData.avgpat}
@@ -588,13 +594,13 @@ export default function Home() {
 
             <div className="row bg-primary mt-4 mx-3 border rounded10 px-4 shadow">
               <div className="col-12 col-md-6 p-2 py-4">
-                <Map long='10' lat='20' />
+                <Map lng="10" lat="20" />
               </div>
               <div
                 className="col-12 col-md-6 p-2 py-4"
                 style={{ left: "24px" }}
               >
-                <Map long='10' lat='20' />
+                <Map lng="10" lat="20" />
               </div>
             </div>
 
