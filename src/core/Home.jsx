@@ -320,7 +320,6 @@ export default function Home() {
     getZipData(zipcodeData.zip)
       .then(({ data }) => {
         setZipcodeData(data);
-        console.log({ zipcodeData });
         setAnnualData({
           prospects: data.population_count * 0.005,
           potential: data.population_count * 0.005 * 0.2,
@@ -589,13 +588,13 @@ export default function Home() {
 
             <div className="row bg-primary mt-4 mx-3 border rounded10 px-4 shadow">
               <div className="col-12 col-md-6 p-2 py-4">
-                <Map />
+                <Map long='10' lat='20' />
               </div>
               <div
                 className="col-12 col-md-6 p-2 py-4"
                 style={{ left: "24px" }}
               >
-                <Map />
+                <Map long='10' lat='20' />
               </div>
             </div>
 

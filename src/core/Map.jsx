@@ -6,12 +6,11 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class Map extends Component {
   static defaultProps = {
     center: {
-      lat: 59.95,
-      lng: 30.33,
+      lat: this.props.lat,
+      lng: this.props.long
     },
     zoom: 11,
   };
-
   render() {
     return (
       // Important! Always set the container height explicitly
