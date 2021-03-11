@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles.css";
 import Map from "./Map";
 import Chart from "./Chart";
@@ -299,7 +299,7 @@ export default function Home() {
 
   const handleSliderChange = (name, value) => (event, value) => {
     event.preventDefault();
-    if (value < 11) return;
+    if (value < 5) return;
     setSliderData({ ...sliderData, [name]: value });
     if (value < 80) {
       setZipcodeData({
@@ -446,7 +446,7 @@ export default function Home() {
               className="btn rounded10 border border-primary w-100 py-2"
               onClick={handleChange("keywords")}
             >
-              <option value="">Keywords</option>
+              <option value="">Categories</option>
               {dropDownDataOP["type"] !== "" &&
                 dropdownData[dropDownDataOP["comp"]].map((data, index) => {
                   if (Object.keys(data)[0] === dropDownDataOP["type"]) {
@@ -511,7 +511,7 @@ export default function Home() {
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
                         onChange={handleSliderChange("radius")}
-                        step={10}
+                        step={5}
                       />
                     </td>
                   </tr>
@@ -524,13 +524,14 @@ export default function Home() {
                     <td>
                       <b className="font-raleway ">
                         ${sliderData.avgpat[0] * 100}-
-                        {sliderData.avgpat[1] * 100} Avg Patients
+                        {sliderData.avgpat[1] * 100} Average Patient Revenue
                       </b>
                       <Slider
                         value={sliderData.avgpat}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
                         onChange={handleSliderChange("avgpat")}
+                        step={5}
                       />
                     </td>
                   </tr>
@@ -541,7 +542,7 @@ export default function Home() {
                     <td scope="row">{zipcodeData["total_male_population"]}</td>
                     <td>
                       <b className="font-raleway ">
-                        {sliderData.prospacts}% prospacts Converted
+                        {sliderData.prospacts}% Leads Converted
                       </b>
                       <Slider
                         value={sliderData.prospacts}
