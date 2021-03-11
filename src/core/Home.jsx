@@ -659,7 +659,11 @@ export default function Home() {
               </h3>
               <table className="table">
                 <thead>
-                  <h3 className="text-primary ">Tempsure/ Flexsure</h3>
+                  <tr>
+                    <th>
+                      <h3 className="text-primary ">Tempsure/ Flexsure</h3>
+                    </th>
+                  </tr>
                   <tr>
                     <th scope="col" className="text-dark">
                       Keyword
