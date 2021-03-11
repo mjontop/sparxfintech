@@ -518,7 +518,7 @@ export default function Home() {
                     </td>
                     <td>
                       <b className="font-raleway ">
-                        ${sliderData.avgpat[0]}-{sliderData.avgpat[1]} Avg
+                        ${sliderData.avgpat[0]*100}-{sliderData.avgpat[1]*100} Avg
                         Patients
                       </b>
                       <Slider
@@ -536,7 +536,7 @@ export default function Home() {
                     <td scope="row">{zipcodeData["total_male_population"]}</td>
                     <td>
                       <b className="font-raleway ">
-                        {sliderData.prospacts} prospacts Covered
+                        {sliderData.prospacts}% prospacts Converted
                       </b>
                       <Slider
                         value={sliderData.prospacts}
