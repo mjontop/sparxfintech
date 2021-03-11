@@ -578,9 +578,9 @@ export default function Home() {
                         <b>{data.name}</b>
                       </h3>
                       <br />
-                      <h5 className="ml-15p text-darkorange">
+                      {/* <h5 className="ml-15p text-darkorange">
                         {data.percentage}% <i className="fa fa-caret-down"></i>
-                      </h5>
+                      </h5> */}
                     </div>
                   </div>
                 </div>
