@@ -289,7 +289,23 @@ export default function Home() {
   };
 
   const [annualData, setAnnualData] = React.useState({});
-  const [zipcodeData, setZipcodeData] = React.useState({});
+  const [zipcodeData, setZipcodeData] = React.useState({
+    zip: "NA",
+    country: "NA",
+    approximate_latitude: "NA",
+    approximate_longitude: "NA",
+    population_count: "NA",
+    total_male_population: "NA",
+    total_female_population: "NA",
+    pop_under_10: "NA",
+    pop_20_to_29: "NA",
+    pop_30_to_39: "NA",
+    pop_40_to_49: "NA",
+    pop_50_to_59: "NA",
+    pop_60_to_69: "NA",
+    pop_70_to_79: "NA",
+    pop_80_plus: "NA",
+  });
 
   const [sliderData, setSliderData] = React.useState({
     radius: 10,
@@ -301,15 +317,19 @@ export default function Home() {
     event.preventDefault();
     if (value < 5) return;
     setSliderData({ ...sliderData, [name]: value });
-    if (value < 80) {
+    if (value > 5) {
       setZipcodeData({
         ...zipcodeData,
-        population_count: zipcodeData[`pop_${value}_to_${value + 9}`],
+        population_count:
+          parseInt(zipcodeData["populationActual"] + value * 92.5) || "NA",
       });
 
       return;
     }
-    setZipcodeData({ ...zipcodeData, population_count: 4868 });
+    setZipcodeData({
+      ...zipcodeData,
+      population_count: parseInt(zipcodeData["populationActual"]),
+    });
   };
 
   const handleZipChange = (name) => (event) => {
@@ -557,7 +577,7 @@ export default function Home() {
                     <td scope="row">{zipcodeData.zip}</td>
 
                     <td scope="row">
-                      ${Math.floor(Math.random() * 100000 + 1)}
+                      ${zipcodeData["median_household_income"]}
                     </td>
                   </tr>
                 </tbody>
