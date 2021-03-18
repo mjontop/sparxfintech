@@ -24,6 +24,8 @@ export const getZipData = async (zip) => {
         },
       };
     data["populationActual"] = data.population_count;
+    data["populationActualMen"] = data.total_male_population;
+    data["populationActualWomen"] = data.total_female_population;
     return { success: false, data };
   } catch (ex) {
     return { succes: false };

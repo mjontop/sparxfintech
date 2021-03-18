@@ -25,9 +25,7 @@ const circularProgregessBar = (percentage, value, annualData) => {
                 </span>
                 <div className="progress-value ml-3 ml-md-4">
                   <div>
-                    {parseFloat(
-                      annualData[Object.keys(annualData)[value]]
-                    ).toFixed(2)}
+                    {parseInt(annualData[Object.keys(annualData)[value]])}
                   </div>
                 </div>
               </div>
@@ -289,27 +287,11 @@ export default function Home() {
   };
 
   const [annualData, setAnnualData] = React.useState({});
-  const [zipcodeData, setZipcodeData] = React.useState({
-    zip: "NA",
-    country: "NA",
-    approximate_latitude: "NA",
-    approximate_longitude: "NA",
-    population_count: "NA",
-    total_male_population: "NA",
-    total_female_population: "NA",
-    pop_under_10: "NA",
-    pop_20_to_29: "NA",
-    pop_30_to_39: "NA",
-    pop_40_to_49: "NA",
-    pop_50_to_59: "NA",
-    pop_60_to_69: "NA",
-    pop_70_to_79: "NA",
-    pop_80_plus: "NA",
-  });
+  const [zipcodeData, setZipcodeData] = React.useState({});
 
   const [sliderData, setSliderData] = React.useState({
     radius: 10,
-    avgpat: [20, 50],
+    avgpat: [2000, 5000],
     prospacts: 20,
   });
 
@@ -317,19 +299,37 @@ export default function Home() {
     event.preventDefault();
     if (value < 5) return;
     setSliderData({ ...sliderData, [name]: value });
-    if (value > 5) {
+    if (name === "radius") {
+      if (value > 5) {
+        setZipcodeData({
+          ...zipcodeData,
+          population_count:
+            parseInt(zipcodeData["populationActual"] + value * 92.5) || "NA",
+          total_male_population:
+            parseInt(zipcodeData["populationActualMen"] + value * 46) || "NA",
+          total_female_population:
+            parseInt(zipcodeData["populationActualWomen"] + value * 46.5) ||
+            "NA",
+        });
+        return;
+      }
       setZipcodeData({
         ...zipcodeData,
-        population_count:
-          parseInt(zipcodeData["populationActual"] + value * 92.5) || "NA",
+        population_count: parseInt(zipcodeData["populationActual"]),
+        total_male_population: parseInt(zipcodeData["populationActualMen"]),
+        total_female_population: parseInt(zipcodeData["populationActualWomen"]),
       });
-
-      return;
     }
-    setZipcodeData({
-      ...zipcodeData,
-      population_count: parseInt(zipcodeData["populationActual"]),
-    });
+    if (name === "prospacts") {
+      if (value > 5) {
+        setAnnualData({
+          prospects: (zipcodeData.population_count * value) / 10000,
+          potential: ((zipcodeData.population_count * value) / 10000) * 0.2,
+          patients:
+            ((zipcodeData.population_count * value) / 10000) * 0.2 * 5500,
+        });
+      }
+    }
   };
 
   const handleZipChange = (name) => (event) => {
@@ -340,6 +340,7 @@ export default function Home() {
     getZipData(zipcodeData.zip)
       .then(({ data }) => {
         setZipcodeData(data);
+
         setAnnualData({
           prospects: data.population_count * 0.005,
           potential: data.population_count * 0.005 * 0.2,
@@ -486,13 +487,16 @@ export default function Home() {
             disabled={!dropDownDataOP.buttonStatus}
             onClick={(e) => {
               e.preventDefault();
+              if (dropDownDataOP.showStats) {
+                window.location.href = "/";
+              }
               setDropDownDataOP({
                 ...dropDownDataOP,
                 showStats: !dropDownDataOP.showStats,
               });
             }}
           >
-            {!dropDownDataOP.showStats ? "Show" : "Hide"} Stats
+            {!dropDownDataOP.showStats ? "Show" : "Reset"} Stats
           </button>
         </div>
 
@@ -520,8 +524,8 @@ export default function Home() {
                 <tbody>
                   <tr>
                     <td scope="row">Population</td>
-                    <td scope="row">{zipcodeData.zip}</td>
                     <td scope="row">{zipcodeData["population_count"]}</td>
+                    <td scope="row"></td>
                     <td>
                       <b className="font-raleway">
                         {sliderData.radius} Miles radius from Zipcode
@@ -537,29 +541,32 @@ export default function Home() {
                   </tr>
                   <tr>
                     <td scope="row">Female</td>
-                    <td scope="row">{zipcodeData.zip}</td>
                     <td scope="row">
                       {zipcodeData["total_female_population"]}
                     </td>
+                    <td scope="row"></td>
                     <td>
                       <b className="font-raleway ">
-                        ${sliderData.avgpat[0] * 100}-
-                        {sliderData.avgpat[1] * 100} Average Patient Revenue
+                        ${sliderData.avgpat[0]}-{sliderData.avgpat[1]} Average
+                        Patient Revenue
                       </b>
                       <Slider
                         value={sliderData.avgpat}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
                         onChange={handleSliderChange("avgpat")}
-                        step={5}
+                        step={500}
+                        min={0}
+                        max={10000}
                       />
                     </td>
                   </tr>
                   <tr>
                     <td scope="row">Male</td>
-                    <td scope="row">{zipcodeData.zip}</td>
-
                     <td scope="row">{zipcodeData["total_male_population"]}</td>
+                    <td scope="row"></td>
+
+
                     <td>
                       <b className="font-raleway ">
                         {sliderData.prospacts}% Leads Converted
@@ -574,11 +581,10 @@ export default function Home() {
                   </tr>
                   <tr>
                     <td scope="row">Average Income </td>
-                    <td scope="row">{zipcodeData.zip}</td>
-
                     <td scope="row">
                       ${zipcodeData["median_household_income"]}
                     </td>
+                    <td scope="row"></td>
                   </tr>
                 </tbody>
               </table>
