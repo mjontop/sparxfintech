@@ -4,7 +4,7 @@ import Map from "./Map";
 import Chart from "./Chart";
 import Base from "./Base";
 import Slider from "@material-ui/core/Slider";
-import { getZipData } from "./helper/coreapicalls";
+import { getPopulationInRaduis, getZipData } from "./helper/coreapicalls";
 
 const circularProgregessBar = (percentage, value, annualData) => {
   return (
@@ -288,6 +288,7 @@ export default function Home() {
 
   const [annualData, setAnnualData] = React.useState({});
   const [zipcodeData, setZipcodeData] = React.useState({});
+  const [popListToRad, setPopListToRad] = React.useState([]);
 
   const [sliderData, setSliderData] = React.useState({
     radius: 10,
@@ -301,10 +302,11 @@ export default function Home() {
     setSliderData({ ...sliderData, [name]: value });
     if (name === "radius") {
       if (value > 5) {
+        
         setZipcodeData({
           ...zipcodeData,
           population_count:
-            parseInt(zipcodeData["populationActual"] + value * 92.5) || "NA",
+            popListToRad[(value/5)] || "NA",
           total_male_population:
             parseInt(zipcodeData["populationActualMen"] + value * 46) || "NA",
           total_female_population:
@@ -338,9 +340,9 @@ export default function Home() {
   };
   const handleSubmit = () => {
     getZipData(zipcodeData.zip)
-      .then(({ data }) => {
+      .then(({ data, popListToRad }) => {
         setZipcodeData(data);
-
+        setPopListToRad(popListToRad)
         setAnnualData({
           prospects: data.population_count * 0.005,
           potential: data.population_count * 0.005 * 0.2,
@@ -424,7 +426,7 @@ export default function Home() {
 
   return (
     <Base>
-      <div className="mycontainer">
+      <div id="pdf" className="mycontainer">
         <div className="row">
           <div className="col-md-3 col-12 my-1">
             <input
@@ -524,8 +526,8 @@ export default function Home() {
                 <tbody>
                   <tr>
                     <td scope="row">Population</td>
+                    <td scope="row">{zipcodeData["populationActual"]}</td>
                     <td scope="row">{zipcodeData["population_count"]}</td>
-                    <td scope="row"></td>
                     <td>
                       <b className="font-raleway">
                         {sliderData.radius} Miles radius from Zipcode
@@ -536,15 +538,17 @@ export default function Home() {
                         aria-labelledby="range-slider"
                         onChange={handleSliderChange("radius")}
                         step={5}
+                        min={0}
+                        max={50}
                       />
                     </td>
                   </tr>
                   <tr>
                     <td scope="row">Female</td>
                     <td scope="row">
-                      {zipcodeData["total_female_population"]}
+                      {zipcodeData["populationActualWomen"]}
                     </td>
-                    <td scope="row"></td>
+                    <td scope="row">{zipcodeData["total_female_population"]}</td>
                     <td>
                       <b className="font-raleway ">
                         ${sliderData.avgpat[0]}-{sliderData.avgpat[1]} Average
@@ -563,9 +567,8 @@ export default function Home() {
                   </tr>
                   <tr>
                     <td scope="row">Male</td>
+                    <td scope="row">{zipcodeData["populationActualMen"]}</td>
                     <td scope="row">{zipcodeData["total_male_population"]}</td>
-                    <td scope="row"></td>
-
 
                     <td>
                       <b className="font-raleway ">
