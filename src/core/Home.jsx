@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles.css";
 import Map from "./Map";
 import Chart from "./Chart";
 import Base from "./Base";
 import Slider from "@material-ui/core/Slider";
+
 import { getPopulationInRaduis, getZipData } from "./helper/coreapicalls";
 
 const circularProgregessBar = (percentage, value, annualData) => {
@@ -23,9 +24,11 @@ const circularProgregessBar = (percentage, value, annualData) => {
                 <span className="progress-right">
                   <span className="progress-bar"></span>
                 </span>
-                <div className="progress-value ml-3 ml-md-4">
+                <div className="progress-value m-auto">
                   <div>
-                    {parseInt(annualData[Object.keys(annualData)[value]])}
+                    {parseInt(
+                      annualData[Object.keys(annualData)[value]]
+                    ).toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -57,7 +60,7 @@ const dottedDropDown = () => (
 );
 
 const dropdownData = {
-  ALMA: [
+  Alma: [
     {
       "Accent Prime": [
         "Body Contouring",
@@ -137,7 +140,7 @@ const dropdownData = {
       VascuLife: [],
     },
   ],
-  BTL: [
+  Btl: [
     {
       Emsculpt: [
         "body contouring",
@@ -231,7 +234,7 @@ const dropdownData = {
       ],
     },
   ],
-  CYNOSURE: [
+  Cynosure: [
     {
       "Elite+/Elite iQ	": [
         "laser hair removal",
@@ -252,7 +255,7 @@ const dropdownData = {
       ],
     },
     {
-      ICON: [
+      Icon: [
         "laser hair removal",
         "laser resurfacing",
         "laser skin treatments",
@@ -285,33 +288,32 @@ export default function Home() {
     pop_70_to_79: 3215,
     pop_80_plus: 1702,
   };
-
+  const [loaded, setLoaded] = useState(false);
   const [annualData, setAnnualData] = React.useState({});
   const [zipcodeData, setZipcodeData] = React.useState({});
-  const [popListToRad, setPopListToRad] = React.useState([]);
+  const [popListToRad, setPopListToRad] = React.useState({
+    total: [],
+    male: [],
+    female: [],
+  });
 
   const [sliderData, setSliderData] = React.useState({
-    radius: 10,
+    radius: 0,
     avgpat: [2000, 5000],
-    prospacts: 20,
+    prospacts: 0,
   });
 
   const handleSliderChange = (name, value) => (event, value) => {
     event.preventDefault();
-    if (value < 5) return;
+    
     setSliderData({ ...sliderData, [name]: value });
     if (name === "radius") {
       if (value > 5) {
-        
         setZipcodeData({
           ...zipcodeData,
-          population_count:
-            popListToRad[(value/5)] || "NA",
-          total_male_population:
-            parseInt(zipcodeData["populationActualMen"] + value * 46) || "NA",
-          total_female_population:
-            parseInt(zipcodeData["populationActualWomen"] + value * 46.5) ||
-            "NA",
+          population_count: popListToRad.total[value / 5 - 1] || "NA",
+          total_male_population: popListToRad.male[value / 5 - 1] || "NA",
+          total_female_population: popListToRad.female[value / 5 - 1] || "NA",
         });
         return;
       }
@@ -325,10 +327,14 @@ export default function Home() {
     if (name === "prospacts") {
       if (value > 5) {
         setAnnualData({
-          prospects: (zipcodeData.population_count * value) / 10000,
-          potential: ((zipcodeData.population_count * value) / 10000) * 0.2,
+          prospects: (zipcodeData.population_count * value) / 10000 || 0,
+          potential:
+            ((zipcodeData.population_count * value) / 10000) *
+            sliderData["avgpat"] || 0,
           patients:
-            ((zipcodeData.population_count * value) / 10000) * 0.2 * 5500,
+            ((zipcodeData.population_count * value) / 10000) *
+            sliderData["avgpat"] *
+            5500 || 0,
         });
       }
     }
@@ -340,16 +346,21 @@ export default function Home() {
   };
   const handleSubmit = () => {
     getZipData(zipcodeData.zip)
-      .then(({ data, popListToRad }) => {
+      .then(({ data, popList }) => {
         setZipcodeData(data);
-        setPopListToRad(popListToRad)
+        setPopListToRad({
+          total: popList.popListToRad,
+          male: popList.popListToRadMale,
+          female: popList.popListToRadFemale,
+        });
         setAnnualData({
           prospects: data.population_count * 0.005,
           potential: data.population_count * 0.005 * 0.2,
           patients: data.population_count * 0.005 * 0.2 * 5500,
         });
+        setLoaded(true);
       })
-      .catch((err) => console.log("Error", err));
+      .catch((err) => console.log("Error hre", err));
   };
 
   const [dropDownDataOP, setDropDownDataOP] = React.useState({
@@ -375,12 +386,12 @@ export default function Home() {
       name: "Annual Prospects",
     },
     {
-      percentage: 50,
-      name: "Annual Potential",
-    },
-    {
       percentage: 60,
       name: "Annual Patients",
+    },
+    {
+      percentage: 50,
+      name: "Annual Potential",
     },
   ];
 
@@ -498,11 +509,11 @@ export default function Home() {
               });
             }}
           >
-            {!dropDownDataOP.showStats ? "Show" : "Reset"} Stats
+            {!dropDownDataOP.showStats ? "Show" : "Reset"} Result
           </button>
         </div>
 
-        {dropDownDataOP.showStats && (
+        {loaded && (
           <>
             <h3 className="mt-4">
               <b>
@@ -545,13 +556,13 @@ export default function Home() {
                   </tr>
                   <tr>
                     <td scope="row">Female</td>
+                    <td scope="row">{zipcodeData["populationActualWomen"]}</td>
                     <td scope="row">
-                      {zipcodeData["populationActualWomen"]}
+                      {zipcodeData["total_female_population"]}
                     </td>
-                    <td scope="row">{zipcodeData["total_female_population"]}</td>
                     <td>
                       <b className="font-raleway ">
-                        ${sliderData.avgpat[0]}-{sliderData.avgpat[1]} Average
+                        ${sliderData.avgpat[0]}-${sliderData.avgpat[1]} Average
                         Patient Revenue
                       </b>
                       <Slider
@@ -613,9 +624,6 @@ export default function Home() {
                         <b>{data.name}</b>
                       </h3>
                       <br />
-                      {/* <h5 className="ml-15p text-darkorange">
-                        {data.percentage}% <i className="fa fa-caret-down"></i>
-                      </h5> */}
                     </div>
                   </div>
                 </div>
@@ -712,6 +720,15 @@ export default function Home() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </>
+        )}
+        {!loaded && (dropDownDataOP.showStats) && (
+          <>
+            <div class="ball-loader">
+              <div class="ball-loader-ball ball1"></div>
+              <div class="ball-loader-ball ball2"></div>
+              <div class="ball-loader-ball ball3"></div>
             </div>
           </>
         )}

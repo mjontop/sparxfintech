@@ -1607,3 +1607,41 @@ Due to the split circle of progress-left and progress right, we must use the ani
    
   outline: none;
 }
+
+/* Loader */
+
+.ball-loader {
+  width: 500px;
+  height: 156.6666666667px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.ball-loader-ball {
+  will-change: transform;
+  height: 156.6666666667px;
+  width: 156.6666666667px;
+  border-radius: 50%;
+  background-color: #2e9dbe;
+  position: absolute;
+  animation: grow 1s ease-in-out infinite alternate;
+}
+.ball-loader-ball.ball1 {
+  left: 0;
+  transform-origin: 100% 50%;
+}
+.ball-loader-ball.ball2 {
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  animation-delay: 0.33s;
+}
+.ball-loader-ball.ball3 {
+  right: 0;
+  animation-delay: 0.66s;
+}
+@keyframes grow {
+  to {
+    transform: translateX(-50%) scale(0);
+  }
+}
