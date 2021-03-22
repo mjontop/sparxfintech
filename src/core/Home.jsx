@@ -300,12 +300,17 @@ export default function Home() {
   const [sliderData, setSliderData] = React.useState({
     radius: 0,
     avgpat: [2000, 5000],
-    prospacts: 0,
+    prospacts: 10,
   });
 
   const handleSliderChange = (name, value) => (event, value) => {
     event.preventDefault();
-    
+    setAnnualData({
+      prospects: zipcodeData.population_count * 0.005,
+      potential: zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100),
+      patients:  zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100) * ((sliderData['avgpat'][0]+sliderData['avgpat'][1])/2),
+    });
+
     setSliderData({ ...sliderData, [name]: value });
     if (name === "radius") {
       if (value > 5) {
@@ -330,14 +335,19 @@ export default function Home() {
           prospects: (zipcodeData.population_count * value) / 10000 || 0,
           potential:
             ((zipcodeData.population_count * value) / 10000) *
-            sliderData["avgpat"] || 0,
+              sliderData["avgpat"] || 0,
           patients:
             ((zipcodeData.population_count * value) / 10000) *
-            sliderData["avgpat"] *
-            5500 || 0,
+              sliderData["avgpat"] *
+              5500 || 0,
         });
       }
     }
+    setAnnualData({
+      prospects: zipcodeData.population_count * 0.005,
+      potential: zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100),
+      patients:  zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100) * ((sliderData['avgpat'][0]+sliderData['avgpat'][1])/2),
+    });
   };
 
   const handleZipChange = (name) => (event) => {
@@ -356,7 +366,7 @@ export default function Home() {
         setAnnualData({
           prospects: data.population_count * 0.005,
           potential: data.population_count * 0.005 * 0.2,
-          patients: data.population_count * 0.005 * 0.2 * 5500,
+          patients: data.population_count * 0.005 * 0.2 * 3500,
         });
         setLoaded(true);
       })
@@ -723,7 +733,7 @@ export default function Home() {
             </div>
           </>
         )}
-        {!loaded && (dropDownDataOP.showStats) && (
+        {!loaded && dropDownDataOP.showStats && (
           <>
             <div class="ball-loader">
               <div class="ball-loader-ball ball1"></div>
