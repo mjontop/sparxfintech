@@ -26,15 +26,18 @@ export const getZipData = async (zip) => {
     data["populationActual"] = data.population_count;
     data["populationActualMen"] = data.total_male_population;
     data["populationActualWomen"] = data.total_female_population;
+    data["avgIncomeActual"] = data.median_household_income;
     let [
       popListToRad,
       popListToRadMale,
       popListToRadFemale,
+      popAvgImcomeList
     ] = await getPopulationInRaduis(data.zip);
+   
     return {
       success: true,
       data,
-      popList: { popListToRad, popListToRadMale, popListToRadFemale },
+      popList: { popListToRad, popListToRadMale, popListToRadFemale, popAvgImcomeList },
     };
   } catch (ex) {
     return { succes: false };
@@ -49,7 +52,9 @@ export const getPopulationInRaduis = async (zip) => {
     let popListToRad = [];
     let popListToRadMale = [];
     let popListToRadFemale = [];
+    let popAvgImcomeList = [];
     for (let i = 1; i <= 10; i += 1) {
+      console.log(i);
       const URL = `https://api.zip-codes.com/ZipCodesAPI.svc/1.0/FindZipCodesInRadius?zipcode=${zip}&minimumradius=0&maximumradius=${
         i * 5
       }&country=ALL&key=BI7LVJ1MF5TOZGAOF67Q`;
@@ -71,6 +76,11 @@ export const getPopulationInRaduis = async (zip) => {
         return data.total_female_population;
       });
 
+      let avgIncomeList = zipCodeList.map(async (zip) => {
+        const { data } = await Axios.get(`${API}/zipcode/${zip}`);
+        return data.median_household_income;
+      });
+
       let popsNum = await Promise.all(popList).then((pops) => {
         return pops;
       });
@@ -80,6 +90,9 @@ export const getPopulationInRaduis = async (zip) => {
       let popsNumFemale = await Promise.all(feMaleList).then((pops) => {
         return pops;
       });
+      let avgIncome = await Promise.all(avgIncomeList).then((pops) => {
+        return pops;
+      });
 
       popsNum = popsNum.reduce((total, num) => {
         if (num === "NA") {
@@ -87,6 +100,7 @@ export const getPopulationInRaduis = async (zip) => {
         }
         return total + num;
       });
+
 
       popsNumMale = popsNumMale.reduce((total, num) => {
         if (num === "NA") {
@@ -102,11 +116,19 @@ export const getPopulationInRaduis = async (zip) => {
         return total + num;
       });
 
+      avgIncome = avgIncome.reduce((total, num) => {
+        if (num === "NA") {
+          num = 0;
+        }
+        return total + num;
+      });
+
       popListToRad = [...popListToRad, popsNum];
       popListToRadMale = [...popListToRadMale, popsNumMale];
       popListToRadFemale = [...popListToRadFemale, popsNumFemale];
+      popAvgImcomeList = [...popAvgImcomeList, avgIncome];
     }
-    return [popListToRad, popListToRadMale, popListToRadFemale];
+    return [popListToRad, popListToRadMale, popListToRadFemale, popAvgImcomeList];
   } catch (ex) {
     console.log("Error old ", ex);
   }

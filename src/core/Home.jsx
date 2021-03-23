@@ -295,6 +295,7 @@ export default function Home() {
     total: [],
     male: [],
     female: [],
+    avgIncome: [],
   });
 
   const [sliderData, setSliderData] = React.useState({
@@ -307,18 +308,25 @@ export default function Home() {
     event.preventDefault();
     setAnnualData({
       prospects: zipcodeData.population_count * 0.005,
-      potential: zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100),
-      patients:  zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100) * ((sliderData['avgpat'][0]+sliderData['avgpat'][1])/2),
+      potential:
+        zipcodeData.population_count * 0.005 * (sliderData["prospacts"] / 100),
+      patients:
+        zipcodeData.population_count *
+        0.005 *
+        (sliderData["prospacts"] / 100) *
+        ((sliderData["avgpat"][0] + sliderData["avgpat"][1]) / 2),
     });
 
     setSliderData({ ...sliderData, [name]: value });
     if (name === "radius") {
-      if (value > 5) {
+      if (value > 4) {
         setZipcodeData({
           ...zipcodeData,
           population_count: popListToRad.total[value / 5 - 1] || "NA",
           total_male_population: popListToRad.male[value / 5 - 1] || "NA",
           total_female_population: popListToRad.female[value / 5 - 1] || "NA",
+          median_household_income:
+            popListToRad.avgIncome[value / 5 - 1] || "NA",
         });
         return;
       }
@@ -327,6 +335,7 @@ export default function Home() {
         population_count: parseInt(zipcodeData["populationActual"]),
         total_male_population: parseInt(zipcodeData["populationActualMen"]),
         total_female_population: parseInt(zipcodeData["populationActualWomen"]),
+        median_household_income: parseInt(zipcodeData["avgIncomeActual"]),
       });
     }
     if (name === "prospacts") {
@@ -345,8 +354,13 @@ export default function Home() {
     }
     setAnnualData({
       prospects: zipcodeData.population_count * 0.005,
-      potential: zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100),
-      patients:  zipcodeData.population_count * 0.005 * (sliderData['prospacts']/100) * ((sliderData['avgpat'][0]+sliderData['avgpat'][1])/2),
+      potential:
+        zipcodeData.population_count * 0.005 * (sliderData["prospacts"] / 100),
+      patients:
+        zipcodeData.population_count *
+        0.005 *
+        (sliderData["prospacts"] / 100) *
+        ((sliderData["avgpat"][0] + sliderData["avgpat"][1]) / 2),
     });
   };
 
@@ -358,15 +372,17 @@ export default function Home() {
     getZipData(zipcodeData.zip)
       .then(({ data, popList }) => {
         setZipcodeData(data);
+        console.log("poplist", popList);
         setPopListToRad({
           total: popList.popListToRad,
           male: popList.popListToRadMale,
           female: popList.popListToRadFemale,
+          avgIncome: popList.popAvgImcomeList,
         });
         setAnnualData({
           prospects: data.population_count * 0.005,
-          potential: data.population_count * 0.005 * 0.2,
-          patients: data.population_count * 0.005 * 0.2 * 3500,
+          potential: data.population_count * 0.005 * 0.1,
+          patients: data.population_count * 0.005 * 0.1 * 3500,
         });
         setLoaded(true);
       })
@@ -605,6 +621,7 @@ export default function Home() {
                   </tr>
                   <tr>
                     <td scope="row">Average Income </td>
+                    <td scope="row">${zipcodeData["avgIncomeActual"]}</td>
                     <td scope="row">
                       ${zipcodeData["median_household_income"]}
                     </td>
